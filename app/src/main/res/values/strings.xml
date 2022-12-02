@@ -11,5 +11,9 @@
     <string name="Password">Password</string>
     <string name="ForgotPassword" translatable="true">Forgot password? Reset Password</string>
     <!-- CreateAccount Page -->
+    <string name="FirstName">First Name</string>
+    <string name="LastName">Last Name</string>
+    <string name="ConfirmPassword">Confirm Password</string>
+    <string name="Finish">Finish</string>
 
 </resources>

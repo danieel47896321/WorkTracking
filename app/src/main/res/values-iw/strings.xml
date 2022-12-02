@@ -11,6 +11,12 @@
     <string name="Email">אימייל</string>
     <string name="Password">סיסמה</string>
     <string name="ForgotPassword" translatable="true">שכחת את הסיסמה? איפוס סיסמה</string>
+    <string name="Required">חובה</string>
     <!-- CreateAccount Page -->
+    <string name="FirstName">שם פרטי</string>
+    <string name="LastName">שם משפחה</string>
+    <string name="ConfirmPassword">אימות סיסמה</string>
+    <string name="Finish">סיום</string>
+    <string name="Loading">טוען</string>
 
 </resources>
