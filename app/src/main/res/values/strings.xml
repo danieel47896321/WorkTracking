@@ -6,4 +6,10 @@
     <string name="CreateAccount">Create Account</string>
     <string name="ResetPassword">ResetPassword</string>
     <string name="SignIn">Sign In</string>
+    <!-- SignIn Page -->
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="ForgotPassword" translatable="true">Forgot password? Reset Password</string>
+    <!-- CreateAccount Page -->
+
 </resources>

@@ -7,4 +7,10 @@
     <string name="CreateAccount">צור חשבון</string>
     <string name="ResetPassword">איפוס סיסמה</string>
     <string name="SignIn">כניסה</string>
+    <!-- SignIn Page -->
+    <string name="Email">אימייל</string>
+    <string name="Password">סיסמה</string>
+    <string name="ForgotPassword" translatable="true">שכחת את הסיסמה? איפוס סיסמה</string>
+    <!-- CreateAccount Page -->
+
 </resources>
