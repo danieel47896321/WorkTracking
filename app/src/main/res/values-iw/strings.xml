@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WorkTracking</string>
+    <string name="app_name">מעקב עבודה</string>
     <string name="Title">כותרת</string>
     <string name="BackIcon">כפתור חזרה</string>
+    <!-- Main Page -->
+    <string name="CreateAccount">צור חשבון</string>
+    <string name="ResetPassword">איפוס סיסמה</string>
+    <string name="SignIn">כניסה</string>
 </resources>

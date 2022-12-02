@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/activity_main.xml" value="0.34782608695652173" />
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/activity_reset_password.xml" value="0.34782608695652173" />
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/fragment_create_account.xml" value="0.34782608695652173" />
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/fragment_sign_in.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/header.xml" value="0.34782608695652173" />
       </map>
     </option>

@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">WorkTracking</string>
+    <string name="app_name">Work Tracking</string>
     <string name="Title">Title</string>
     <string name="BackIcon">Back Icon</string>
-
+    <!-- Main Page -->
+    <string name="CreateAccount">Create Account</string>
+    <string name="ResetPassword">ResetPassword</string>
+    <string name="SignIn">Sign In</string>
 </resources>
