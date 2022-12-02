@@ -57,4 +57,9 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/blue2</item>
     </style>
+    <style name="TextView_Style_Normal" parent="Widget.AppCompat.TextView">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/default_color</item>
+    </style>
 </resources>

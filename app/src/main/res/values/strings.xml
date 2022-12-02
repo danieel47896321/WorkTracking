@@ -15,5 +15,7 @@
     <string name="LastName">Last Name</string>
     <string name="ConfirmPassword">Confirm Password</string>
     <string name="Finish">Finish</string>
-
+    <!-- ResetPassword Page -->
+    <string name="ForgotPasswordInfo" translatable="true">Please enter the email address which you want to reset the password.</string>
+    <string name="ResetLink" translatable="true">Reset Link has been send to your Email.</string>
 </resources>
