@@ -1,63 +1,166 @@
 package com.example.worktracking.Guest;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.worktracking.Class.Loading;
+import com.example.worktracking.Class.PopUpMSG;
+import com.example.worktracking.Class.User;
 import com.example.worktracking.R;
+import com.example.worktracking.User.Home;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SignIn#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SignIn extends Fragment {
-
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public SignIn() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SignIn.
-     */
-    public static SignIn newInstance(String param1, String param2) {
-        SignIn fragment = new SignIn();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    private View view;
+    private TextView ResetPassword;
+    private TextInputLayout TextInputLayoutEmail, TextInputLayoutPassword;
+    private Button ButtonSignIn;
+    private Loading loading;
+    private Intent intent;
+    private User user = new User();
+    private FirebaseUser firebaseUser;
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
+    private DatabaseReference databaseReference = firebaseDatabase.getReference().child("Users");
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
+        TextInputLayoutEmail = view.findViewById(R.id.TextInputLayoutEmail);
+        TextInputLayoutPassword = view.findViewById(R.id.TextInputLayoutPassword);
+        ButtonSignIn = view.findViewById(R.id.ButtonSignIn);
+        ResetPassword = view.findViewById(R.id.ResetPassword);
+        if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
+            loading = new Loading(view.getContext());
+            getUser();
+        }
+        EndIcon();
+        SignInCheck();
+        ResetPassword();
+        return view;
+    }
+    private void ResetPassword() {
+        ResetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ResetPassword.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+    }
+    private void EndIcon() {
+        TextInputLayoutEmail.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextInputLayoutEmail.setHelperText("");
+                TextInputLayoutEmail.getEditText().setText("");
+            }
+        });
+    }
+    private boolean isEmailValid(CharSequence email) { return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches(); }
+    private void CheckValues(){
+        if(TextInputLayoutEmail.getEditText().getText().length()<1)
+            TextInputLayoutEmail.setHelperText(getResources().getString(R.string.Required));
+        else if(!isEmailValid(TextInputLayoutEmail.getEditText().getText().toString()))
+            TextInputLayoutEmail.setHelperText(getResources().getString(R.string.InvalidEmail));
+        else
+            TextInputLayoutEmail.setHelperText("");
+        if(TextInputLayoutPassword.getEditText().getText().length()<1)
+            TextInputLayoutPassword.setHelperText(getResources().getString(R.string.Required));
+        else if(TextInputLayoutPassword.getEditText().getText().length()<6)
+            TextInputLayoutPassword.setHelperText(getResources().getString(R.string.MinimumChars));
+        else
+            TextInputLayoutPassword.setHelperText("");
+    }
+    private void SignInCheck(){
+        ButtonSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckValues();
+                if(TextInputLayoutEmail.getEditText().getText().length() > 0 && TextInputLayoutPassword.getEditText().getText().length() > 5 && isEmailValid(TextInputLayoutEmail.getEditText().getText().toString()) && TextInputLayoutPassword.getEditText().getText().length() > 0)
+                    SignIn();
+            }
+        });
+    }
+    private void SignIn(){
+        firebaseAuth.signInWithEmailAndPassword(TextInputLayoutEmail.getEditText().getText().toString(), TextInputLayoutPassword.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                loading = new Loading(view.getContext());
+                if (task.isSuccessful()) {
+                    if(firebaseAuth.getCurrentUser().isEmailVerified())
+                        getUser();
+                    else {
+                        new PopUpMSG(view.getContext(),getResources().getString(R.string.SignIn),getResources().getString(R.string.CheckEmailVerify));
+                        loading.stop();
+                    }
+                } else
+                    CheckEmailExists();
+            }
+        });
+    }
+    private void CheckEmailExists(){
+        firebaseAuth.fetchSignInMethodsForEmail(TextInputLayoutEmail.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+            @Override
+            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                loading.stop();
+                if(task.isSuccessful()) {
+                    if (task.getResult().getSignInMethods().isEmpty())
+                        TextInputLayoutEmail.setHelperText(getResources().getString(R.string.EmailNotExist));
+                    else {
+                        TextInputLayoutEmail.setHelperText("");
+                        if (TextInputLayoutPassword.getEditText().getText().length() < 1)
+                            TextInputLayoutPassword.setHelperText(getResources().getString(R.string.Required));
+                        else if (TextInputLayoutPassword.getEditText().getText().length() < 6)
+                            TextInputLayoutPassword.setHelperText(getResources().getString(R.string.MinimumChars));
+                        else
+                            TextInputLayoutPassword.setHelperText(getResources().getString(R.string.WrongPassword));
+                    }
+                }
+                else
+                    new PopUpMSG(view.getContext(),getResources().getString(R.string.Error),getResources().getString(R.string.ErrorMSG));
+            }
+        });
+    }
+    private void getUser(){
+        if(firebaseAuth.getCurrentUser() != null) {
+            databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    loading.stop();
+                    User user = snapshot.getValue(User.class);
+                    Home(user);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) { }
+            });
         }
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_in, container, false);
+    private void Home(User user){
+        Intent intent = new Intent(getActivity(), Home.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

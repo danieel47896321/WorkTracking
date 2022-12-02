@@ -16,6 +16,20 @@
     <string name="LastName">שם משפחה</string>
     <string name="ConfirmPassword">אימות סיסמה</string>
     <string name="Finish">סיום</string>
+    <string name="Loading">טוען</string>
+    <string name="MinimumChars">חובה מינימום 6 תווים</string>
+    <string name="InvalidEmail">אימייל לא תקין</string>
+    <string name="InvalidPassword">סיסמה לא תואמת</string>
+    <string name="EmailExist">האימייל כבר קיים במערכת</string>
+    <string name="ErrorMSG">משהו השתבש, אנא נסה שוב בעוד כמה דקות.</string>
+    <string name="Error">שגיאה</string>
+    <string name="OK">אישור</string>
+    <string name="CANCEL">ביטול</string>
+    <string name="CompleteCreateAccount">נרשמת בהצלחה, בבקשה אמת את חשבונך בעזרת קישור אימות שנשלח לאיימיל שלך.</string>
+    <string name="CheckEmailVerify">חשבון זה עדיין לא אומת, בבקשה בדוק את הקישור שנשלח לאימייל שלך ואמת את החשבון.</string>
+    <string name="EmailNotExist">האימייל לא קיים במערכת</string>
+    <string name="WrongPassword">סיסמה שגויה</string>
+    <string name="Required">חובה</string>
     <!-- ResetPassword Page -->
     <string name="ForgotPasswordInfo" translatable="true">נא הזן את כתובת האימייל שברצונך לשחזר עבורו את הסיסמה</string>
     <string name="ResetLink" translatable="true">קישור לאיפוס הסיסמה נשלח לאימייל.</string>
