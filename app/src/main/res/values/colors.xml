@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green">#61F367</color>
+    <color name="dark_green">#3DA300</color>
+    <color name="orange">#FF5722</color>
+    <color name="red">#F80A0A</color>
+    <color name="sky">#03A9F4</color>
+    <color name="PickColor">#EDEFF4</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="blue">#0B57DC</color>
+    <color name="blue2">#0979DA</color>
+    <color name="default_color">#808080</color>
+    <color name="mtrl_textinput_default_box_stroke_color" override="true">#808080</color>
 </resources>
