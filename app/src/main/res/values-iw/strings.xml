@@ -33,4 +33,12 @@
     <!-- ResetPassword Page -->
     <string name="ForgotPasswordInfo" translatable="true">נא הזן את כתובת האימייל שברצונך לשחזר עבורו את הסיסמה</string>
     <string name="ResetLink" translatable="true">קישור לאיפוס הסיסמה נשלח לאימייל.</string>
+    <!-- Home Page -->
+    <string name="Home">בית</string>
+    <string name="AddDate">הוספת תאריך</string>
+    <string name="RemoveDate">הסרת תאריך</string>
+    <string name="SignOut" translatable="true">התנתק</string>
+    <string name="Yes" translatable="true">כן</string>
+    <string name="No" translatable="true">לא</string>
+    <string name="AreYouSure" translatable="true">האם אתה בטוח שברצונך להתנתק?</string>
 </resources>

@@ -32,4 +32,12 @@
     <!-- ResetPassword Page -->
     <string name="ForgotPasswordInfo" translatable="true">Please enter the email address which you want to reset the password.</string>
     <string name="ResetLink" translatable="true">Reset Link has been send to your Email.</string>
+    <!-- Home Page -->
+    <string name="Home">Home</string>
+    <string name="AddDate">Add Date</string>
+    <string name="RemoveDate">Remove Date</string>
+    <string name="SignOut" translatable="true">Sign Out</string>
+    <string name="Yes" translatable="true">Yes</string>
+    <string name="No" translatable="true">No</string>
+    <string name="AreYouSure" translatable="true">Are you sure you want to Sign Out?</string>
 </resources>

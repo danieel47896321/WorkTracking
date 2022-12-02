@@ -4,6 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context=".User.Home">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/floatingActionButtonAdd"
+        android:layout_width="172dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/AddDate"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:icon="@drawable/add"
+        app:iconPadding="2dp"
+        app:iconSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonRemove"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonOpen" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/floatingActionButtonRemove"
+        android:layout_width="172dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="viewStart"
+        android:src="@drawable/remove"
+        android:text="@string/RemoveDate"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        android:textStyle="bold"
+        app:icon="@drawable/remove"
+        app:iconPadding="2dp"
+        app:iconSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonOpen"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonAdd" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonOpen"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:fabCustomSize="60dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/open"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/LayoutTags"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
