@@ -41,4 +41,16 @@
     <string name="Yes" translatable="true">כן</string>
     <string name="No" translatable="true">לא</string>
     <string name="AreYouSure" translatable="true">האם אתה בטוח שברצונך להתנתק?</string>
+    <string name="January" translatable="true">ינואר</string>
+    <string name="February" translatable="true">פברואר</string>
+    <string name="March" translatable="true">מרץ</string>
+    <string name="April" translatable="true">אפריל</string>
+    <string name="May" translatable="true">מאי</string>
+    <string name="June" translatable="true">יוני</string>
+    <string name="July" translatable="true">יולי</string>
+    <string name="August" translatable="true">אוגוסט</string>
+    <string name="September" translatable="true">September</string>
+    <string name="October" translatable="true">אוקטובר</string>
+    <string name="November" translatable="true">נובמבר</string>
+    <string name="December" translatable="true">דצמבר</string>
 </resources>

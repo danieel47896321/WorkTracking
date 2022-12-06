@@ -40,4 +40,31 @@
     <string name="Yes" translatable="true">Yes</string>
     <string name="No" translatable="true">No</string>
     <string name="AreYouSure" translatable="true">Are you sure you want to Sign Out?</string>
+    <string name="January" translatable="true">January</string>
+    <string name="February" translatable="true">February</string>
+    <string name="March" translatable="true">March</string>
+    <string name="April" translatable="true">April</string>
+    <string name="May" translatable="true">מאי</string>
+    <string name="June" translatable="true">June</string>
+    <string name="July" translatable="true">July</string>
+    <string name="August" translatable="true">August</string>
+    <string name="September" translatable="true">September</string>
+    <string name="October" translatable="true">October</string>
+    <string name="November" translatable="true">November</string>
+    <string name="December" translatable="true">December</string>
+
+    <string-array name="Months">
+        <item>@string/January</item>
+        <item>@string/February</item>
+        <item>@string/March</item>
+        <item>@string/April</item>
+        <item>@string/May</item>
+        <item>@string/June</item>
+        <item>@string/July</item>
+        <item>@string/August</item>
+        <item>@string/September</item>
+        <item>@string/October</item>
+        <item>@string/November</item>
+        <item>@string/December</item>
+    </string-array>
 </resources>
