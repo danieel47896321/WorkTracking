@@ -11,7 +11,8 @@
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/fragment_create_account.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/fragment_sign_in.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/header.xml" value="0.34782608695652173" />
-        <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/year_view.xml" value="0.67" />
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/month_view.xml" value="0.34782608695652173" />
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/WorkTracking/app/src/main/res/layout/year_view.xml" value="0.9" />
       </map>
     </option>
   </component>

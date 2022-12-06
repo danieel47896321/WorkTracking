@@ -28,14 +28,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView Year;
+        View view;
         RecyclerView recyclerView;
         ConstraintLayout constraintLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             Year = itemView.findViewById(R.id.Year);
-            Year = itemView.findViewById(R.id.Year);
+            view = itemView.findViewById(R.id.view);
             recyclerView = itemView.findViewById(R.id.recyclerView);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
+
         }
     }
     public HomeAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,14 +47,26 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         return new HomeAdapter.MyViewHolder(view);
     }
     @SuppressLint("ResourceType")
-    public void onBindViewHolder(@NonNull HomeAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HomeAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        setMonths(position);
         holder.Year.setText(years.get(position).getYear());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                years.get(position).setClicked(!years.get(position).getClicked());
+                if(years.get(position).getClicked()) {
+                    holder.view.setVisibility(View.VISIBLE);
+                    holder.recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    holder.view.setVisibility(View.GONE);
+                    holder.recyclerView.setVisibility(View.GONE);
+                }
             }
         });
+    }
+    private void setMonths(int position){
+
+
     }
     public int getItemCount() { return years.size(); }
 }

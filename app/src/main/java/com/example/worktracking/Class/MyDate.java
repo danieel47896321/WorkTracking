@@ -2,13 +2,15 @@ package com.example.worktracking.Class;
 
 public class MyDate {
     private String Month;
+    private String Company;
     private String Day;
     private String Date;
     private String StartTime;
     private String EndTime;
     private String TotalWorkTime;
-    public MyDate(String month, String day, String date, String startTime, String endTime, String totalWorkTime) {
+    public MyDate(String month, String company, String day, String date, String startTime, String endTime, String totalWorkTime) {
         Month = month;
+        Company = company;
         Day = day;
         Date = date;
         StartTime = startTime;
@@ -20,6 +22,12 @@ public class MyDate {
     }
     public void setMonth(String month) {
         Month = month;
+    }
+    public String getCompany() {
+        return Company;
+    }
+    public void setCompany(String company) {
+        Company = company;
     }
     public String getDay() {
         return Day;
