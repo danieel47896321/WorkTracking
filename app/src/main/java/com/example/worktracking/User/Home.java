@@ -18,7 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.worktracking.Adapters.HomeAdapter;
+import com.example.worktracking.Adapters.MonthAdapter;
 import com.example.worktracking.Class.Loading;
+import com.example.worktracking.Class.Month;
+import com.example.worktracking.Class.MyDate;
 import com.example.worktracking.Class.User;
 import com.example.worktracking.Class.Year;
 import com.example.worktracking.MainActivity;
@@ -77,6 +80,9 @@ public class Home extends AppCompatActivity {
         years.add(new Year("2021"));
         years.add(new Year("2020"));
         years.add(new Year("2019"));
+        years.get(0).AddMonth(new Month("Jan"));
+        years.get(0).AddMonth(new Month("March"));
+        years.get(1).AddMonth(new Month("Sep"));
         ShowTags(years);
     }
     private void ShowTags(ArrayList<Year> HomeList){

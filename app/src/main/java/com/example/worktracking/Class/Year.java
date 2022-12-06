@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class Year implements Serializable {
     private String Year;
-    private ArrayList<MyDate> dates;
+    private ArrayList<Month> Months;
     private Boolean Clicked = false;
     public Year(String year) {
-        dates = new ArrayList<>();
+        Months = new ArrayList<>();
         Year = year;
     }
     public Boolean getClicked() {
@@ -17,13 +17,13 @@ public class Year implements Serializable {
     public void setClicked(Boolean clicked) {
         Clicked = clicked;
     }
-    public void AddDate (MyDate date){ dates.add(date); }
-    public void RemoveDate (MyDate date){ dates.remove(date); }
-    public ArrayList<MyDate> getDates() {
-        return dates;
+    public void AddMonth (Month month){ Months.add(month); }
+    public void RemoveMonth (Month month){ Months.remove(month); }
+    public ArrayList<Month> getMonths() {
+        return Months;
     }
-    public void setDates(ArrayList<MyDate> dates) {
-        this.dates = dates;
+    public void setMonths(ArrayList<Month> months) {
+        this.Months = months;
     }
     public String getYear() { return Year; }
     public void setYear(String year) { Year = year; }

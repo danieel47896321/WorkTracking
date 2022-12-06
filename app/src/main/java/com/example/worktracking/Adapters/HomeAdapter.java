@@ -5,16 +5,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.worktracking.Class.User;
 import com.example.worktracking.Class.Year;
 import com.example.worktracking.R;
-
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
@@ -27,14 +29,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         this.user = user;
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView Year;
-        View view;
+        TextView Year, NumberOfMonths;
+        ImageView YearArrow;
+        LinearLayout linearLayout;
         RecyclerView recyclerView;
         ConstraintLayout constraintLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             Year = itemView.findViewById(R.id.Year);
-            view = itemView.findViewById(R.id.view);
+            NumberOfMonths = itemView.findViewById(R.id.NumberOfMonths);
+            YearArrow = itemView.findViewById(R.id.YearArrow);
+            linearLayout = itemView.findViewById(R.id.linearLayout);
             recyclerView = itemView.findViewById(R.id.recyclerView);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
 
@@ -48,25 +53,25 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     }
     @SuppressLint("ResourceType")
     public void onBindViewHolder(@NonNull HomeAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        setMonths(position);
         holder.Year.setText(years.get(position).getYear());
+        holder.NumberOfMonths.setText(context.getResources().getString(R.string.NumberOfMonths) + " " + years.get(position).getMonths().size());
+        holder.recyclerView.setHasFixedSize(true);
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 years.get(position).setClicked(!years.get(position).getClicked());
                 if(years.get(position).getClicked()) {
-                    holder.view.setVisibility(View.VISIBLE);
-                    holder.recyclerView.setVisibility(View.VISIBLE);
+                    holder.YearArrow.setImageResource(R.drawable.arrow_up);
+                    holder.linearLayout.setVisibility(View.VISIBLE);
+                    MonthAdapter monthAdapter = new MonthAdapter(context,years.get(position).getMonths(),user);
+                    holder.recyclerView.setAdapter(monthAdapter);
                 } else {
-                    holder.view.setVisibility(View.GONE);
-                    holder.recyclerView.setVisibility(View.GONE);
+                    holder.YearArrow.setImageResource(R.drawable.arrow_down);
+                    holder.linearLayout.setVisibility(View.GONE);
                 }
             }
         });
-    }
-    private void setMonths(int position){
-
-
     }
     public int getItemCount() { return years.size(); }
 }
