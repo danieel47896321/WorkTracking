@@ -2,6 +2,7 @@ package com.example.worktracking.User;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
@@ -16,8 +17,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.worktracking.Adapters.HomeAdapter;
 import com.example.worktracking.Class.Loading;
 import com.example.worktracking.Class.User;
+import com.example.worktracking.Class.Year;
 import com.example.worktracking.MainActivity;
 import com.example.worktracking.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -36,6 +39,7 @@ public class Home extends AppCompatActivity {
     private Boolean isOpen = false;
     private Loading loading;
     private Dialog dialog;
+    private ArrayList<Year> years;
     private Context context;
     private TextView Title;
     private User user = new User();
@@ -52,10 +56,11 @@ public class Home extends AppCompatActivity {
         setID();
         SignOutIcon();
         setAddAndRemove();
-        //setTags();
+        setTags();
     }
-    public void setID(){
+    private void setID(){
         intent = getIntent();
+        years = new ArrayList<>();
         user = (User)intent.getSerializableExtra("user");
         Title = findViewById(R.id.Title);
         Title.setText(getResources().getString(R.string.Home));
@@ -66,6 +71,18 @@ public class Home extends AppCompatActivity {
         BackIcon = findViewById(R.id.BackIcon);
         BackIcon.setImageResource(R.drawable.signout);
         BackIcon.setRotation(180);
+    }
+    private void setTags(){
+        years.add(new Year("2022"));
+        years.add(new Year("2021"));
+        years.add(new Year("2020"));
+        years.add(new Year("2019"));
+        ShowTags(years);
+    }
+    private void ShowTags(ArrayList<Year> HomeList){
+        HomeAdapter homeAdapter = new HomeAdapter(this,HomeList,user);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        recyclerView.setAdapter(homeAdapter);
     }
     private void setAddAndRemove(){
         context = this;
