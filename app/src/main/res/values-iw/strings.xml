@@ -54,4 +54,13 @@
     <string name="October" translatable="true">אוקטובר</string>
     <string name="November" translatable="true">נובמבר</string>
     <string name="December" translatable="true">דצמבר</string>
+    <string name="Date" translatable="true">תאריך</string>
+    <string name="Year" translatable="true">שנה</string>
+    <string name="Month" translatable="true">חודש</string>
+    <string name="Company" translatable="true">חברה</string>
+    <string name="StartTime" translatable="true">זמן התחלה</string>
+    <string name="EndTime" translatable="true">זמן סיום</string>
+    <string name="Add" translatable="true">הוספה</string>
+    <string name="Cancel" translatable="true">ביטול</string>
+
 </resources>

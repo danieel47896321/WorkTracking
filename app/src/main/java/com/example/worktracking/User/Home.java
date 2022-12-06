@@ -1,19 +1,26 @@
 package com.example.worktracking.User;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,20 +29,31 @@ import com.example.worktracking.Adapters.MonthAdapter;
 import com.example.worktracking.Class.Loading;
 import com.example.worktracking.Class.Month;
 import com.example.worktracking.Class.MyDate;
+import com.example.worktracking.Class.PopUpMSG;
 import com.example.worktracking.Class.User;
 import com.example.worktracking.Class.Year;
 import com.example.worktracking.MainActivity;
 import com.example.worktracking.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Response;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 public class Home extends AppCompatActivity {
     private ImageView BackIcon;
-    private Button ButtonAddDate, ButtonRemoveDate, ButtonCancel;
+    private TextInputLayout TextInputLayoutCompany, TextInputLayoutDate, TextInputLayoutStartTime, TextInputLayoutEndTime;
+    private Button ButtonAddDate, ButtonRemoveDate, ButtonAdd, ButtonCancel;
     private FloatingActionButton floatingActionButtonOpen;
     private ExtendedFloatingActionButton floatingActionButtonAdd, floatingActionButtonRemove;
     private Animation rotateOpen, rotateClose, toBottom, fromBottom;
@@ -48,6 +66,8 @@ public class Home extends AppCompatActivity {
     private User user = new User();
     private RecyclerView recyclerView;
     private Intent intent;
+    private Calendar calendar = Calendar.getInstance();
+    private int Year = calendar.get(Calendar.YEAR), Month = calendar.get(Calendar.MONTH), Day = calendar.get(Calendar.DAY_OF_MONTH), UserYear, UserMonth, UserDay;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +131,7 @@ public class Home extends AppCompatActivity {
                     floatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //AddDateDialog();
+                            AddDateDialog();
                         }
                     });
                     floatingActionButtonRemove.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +149,55 @@ public class Home extends AppCompatActivity {
                     floatingActionButtonAdd.setClickable(false);
                     floatingActionButtonRemove.setClickable(false);
                 }
+            }
+        });
+    }
+    private void AddDateDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_add_date,null);
+        builder.setCancelable(false);
+        builder.setView(dialogView);
+        TextInputLayoutCompany = dialogView.findViewById(R.id.TextInputLayoutCompany);
+        TextInputLayoutDate = dialogView.findViewById(R.id.TextInputLayoutDate);
+        TextInputLayoutStartTime = dialogView.findViewById(R.id.TextInputLayoutStartTime);
+        TextInputLayoutEndTime = dialogView.findViewById(R.id.TextInputLayoutEndTime);
+        ButtonAdd = dialogView.findViewById(R.id.ButtonAdd);
+        ButtonCancel = dialogView.findViewById(R.id.ButtonCancel);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.show();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        DatePick();
+        ButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { alertDialog.cancel(); }
+        });
+        ButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+    private void DatePick(){
+        TextInputLayoutDate.getEditText().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Home.this, new DatePickerDialog.OnDateSetListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        month = month + 1;
+                        UserMonth = month;
+                        UserYear = year;
+                        UserDay = dayOfMonth;
+                        String Date = dayOfMonth + "/" + month + "/" + year;
+                        TextInputLayoutDate.getEditText().setText(Date);
+                    }
+                },Year, Month, Day);
+                datePickerDialog.show();
             }
         });
     }

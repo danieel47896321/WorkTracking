@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextInputLayoutCompany"
+            style="@style/TextInputLayout_Style"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:hint="@string/Company"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/TextInputEditTextInputCompany"
+                style="@style/TextInputEditText_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextInputLayoutDate"
+            style="@style/TextInputLayout_Style"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:hint="@string/Date"
+            app:endIconDrawable="@drawable/drop_down"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toEndOf="@+id/TextInputLayoutCompany"
+            app:layout_constraintStart_toStartOf="@+id/TextInputLayoutCompany"
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayoutCompany">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/TextInputEditDate"
+                style="@style/TextInputEditText_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextInputLayoutStartTime"
+            style="@style/TextInputLayout_Style"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:hint="@string/StartTime"
+            app:endIconDrawable="@drawable/drop_down"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toEndOf="@+id/TextInputLayoutDate"
+            app:layout_constraintStart_toStartOf="@+id/TextInputLayoutDate"
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayoutDate">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/TextInputEditStartTime"
+                style="@style/TextInputEditText_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextInputLayoutEndTime"
+            style="@style/TextInputLayout_Style"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:hint="@string/EndTime"
+            app:endIconDrawable="@drawable/drop_down"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toEndOf="@+id/TextInputLayoutStartTime"
+            app:layout_constraintStart_toStartOf="@+id/TextInputLayoutStartTime"
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayoutStartTime">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/TextInputEditDateEndTime"
+                style="@style/TextInputEditText_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/ButtonAdd"
+            style="@style/Button_Style"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:text="@string/Add"
+            app:layout_constraintEnd_toEndOf="@+id/TextInputLayoutEndTime"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/TextInputLayoutEndTime"
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayoutEndTime" />
+
+        <Button
+            android:id="@+id/ButtonCancel"
+            style="@style/Button_Style"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/Cancel"
+            app:layout_constraintEnd_toEndOf="@+id/ButtonAdd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/ButtonAdd"
+            app:layout_constraintTop_toBottomOf="@+id/ButtonAdd" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

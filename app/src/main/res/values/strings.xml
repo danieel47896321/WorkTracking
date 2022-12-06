@@ -53,6 +53,14 @@
     <string name="October" translatable="true">October</string>
     <string name="November" translatable="true">November</string>
     <string name="December" translatable="true">December</string>
+    <string name="Date" translatable="true">Date</string>
+    <string name="Year" translatable="true">Year</string>
+    <string name="Month" translatable="true">Month</string>
+    <string name="Company" translatable="true">Company</string>
+    <string name="StartTime" translatable="true">Start Time</string>
+    <string name="EndTime" translatable="true">End Time</string>
+    <string name="Add" translatable="true">Add</string>
+    <string name="Cancel" translatable="true">Cancel</string>
 
     <string-array name="Months">
         <item>@string/January</item>
