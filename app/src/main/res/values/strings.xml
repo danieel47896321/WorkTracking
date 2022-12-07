@@ -64,6 +64,7 @@
     <string name="Add" translatable="true">Add</string>
     <string name="Cancel" translatable="true">Cancel</string>
     <string name="Edit" translatable="true">Edit</string>
+    <string name="InvalidDate" translatable="true">Invalid date</string>
 
     <string-array name="Months">
         <item>@string/January</item>

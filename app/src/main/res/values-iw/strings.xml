@@ -65,5 +65,5 @@
     <string name="Add" translatable="true">הוספה</string>
     <string name="Cancel" translatable="true">ביטול</string>
     <string name="Edit" translatable="true">עריכה</string>
-
+    <string name="InvalidDate" translatable="true">תאריך לא תקין</string>
 </resources>

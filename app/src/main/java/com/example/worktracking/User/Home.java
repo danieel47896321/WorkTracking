@@ -47,6 +47,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 public class Home extends AppCompatActivity {
     private ImageView BackIcon;
@@ -196,26 +197,59 @@ public class Home extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                ArrayList<MyDate> myDates = new ArrayList<>();
-                FirebaseDatabase database = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
-                DatabaseReference reference = database.getReference().child("WorkDates").child(user.getUid()).child(UserYear + "").child(getMonth(UserMonth));
-                reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        myDates.clear();
-                        for( DataSnapshot data : snapshot.getChildren()){
-                            MyDate date = data.getValue(MyDate.class);
-                            myDates.add(date);
+                if(TextInputLayoutCompany.getEditText().getText().toString().equals(""))
+                    TextInputLayoutCompany.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutCompany.setHelperText("");
+                if(TextInputLayoutDate.getEditText().getText().toString().equals(""))
+                    TextInputLayoutDate.setHelperText(getResources().getString(R.string.Required));
+                else if(!checkDate(UserYear,UserMonth,UserDay))
+                    TextInputLayoutDate.setHelperText(getResources().getString(R.string.InvalidDate));
+                else
+                    TextInputLayoutDate.setHelperText("");
+                if(TextInputLayoutStartTime.getEditText().getText().toString().equals(""))
+                    TextInputLayoutStartTime.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutStartTime.setHelperText("");
+                if(TextInputLayoutEndTime.getEditText().getText().toString().equals(""))
+                    TextInputLayoutEndTime.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutEndTime.setHelperText("");
+                if(!(TextInputLayoutCompany.getEditText().getText().toString().equals("")) && !(TextInputLayoutDate.getEditText().getText().toString().equals(""))
+                    && !(TextInputLayoutEndTime.getEditText().getText().toString().equals("")) && !(TextInputLayoutStartTime.getEditText().getText().toString().equals(""))) {
+                    ArrayList<MyDate> myDates = new ArrayList<>();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
+                    DatabaseReference reference = database.getReference().child("WorkDates").child(user.getUid()).child(UserYear + "").child(getMonth(UserMonth));
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            myDates.clear();
+                            for (DataSnapshot data : snapshot.getChildren()) {
+                                MyDate date = data.getValue(MyDate.class);
+                                myDates.add(date);
+                            }
+                            myDates.add(new MyDate(UserMonth + "", TextInputLayoutCompany.getEditText().getText().toString(), UserDay + "", UserYear + "", "10:00", "18:00"));
+                            reference.setValue(myDates);
+                            alertDialog.cancel();
                         }
-                        myDates.add(new MyDate(UserMonth + "", TextInputLayoutCompany.getEditText().getText().toString(), UserDay + "", UserYear + "", "10:00", "18:00"));
-                        reference.setValue(myDates);
-                        alertDialog.cancel();
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) { }
-                });
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
             }
         });
+    }
+    private boolean checkDate(int userYear, int userMonth, int userDay) {
+        if(userYear > Year) {
+            return false;
+        } else if(userYear == Year && userMonth > (Month + 1)) {
+            return false;
+        } else if(userYear == Year && userMonth == (Month + 1) && userDay > Day){
+            return false;
+        }
+        return true;
     }
     private String getMonth(int month){
         if(month == 1){
