@@ -1,21 +1,31 @@
 package com.example.worktracking.Class;
 
-public class MyDate {
+import java.io.Serializable;
+
+public class MyDate implements Serializable {
     private String Month;
     private String Company;
     private String Day;
+    private String Year;
     private String Date;
     private String StartTime;
     private String EndTime;
     private String TotalWorkTime;
-    public MyDate(String month, String company, String day, String date, String startTime, String endTime, String totalWorkTime) {
+    public MyDate() { }
+    public MyDate(String month, String company, String day, String year, String startTime, String endTime) {
         Month = month;
+        Year = year;
         Company = company;
         Day = day;
-        Date = date;
+        Date = day + "/" + month + "/" + year;
         StartTime = startTime;
         EndTime = endTime;
-        TotalWorkTime = totalWorkTime;
+    }
+    public String getYear() {
+        return Year;
+    }
+    public void setYear(String year) {
+        Year = year;
     }
     public String getMonth() {
         return Month;

@@ -1,5 +1,6 @@
 package com.example.worktracking.User;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -25,30 +27,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.worktracking.Adapters.HomeAdapter;
-import com.example.worktracking.Adapters.MonthAdapter;
 import com.example.worktracking.Class.Loading;
 import com.example.worktracking.Class.Month;
 import com.example.worktracking.Class.MyDate;
-import com.example.worktracking.Class.PopUpMSG;
 import com.example.worktracking.Class.User;
-import com.example.worktracking.Class.Year;
+import com.example.worktracking.Class.MyYear;
 import com.example.worktracking.MainActivity;
 import com.example.worktracking.R;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.Response;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Collections;
 
 public class Home extends AppCompatActivity {
     private ImageView BackIcon;
@@ -60,7 +58,7 @@ public class Home extends AppCompatActivity {
     private Boolean isOpen = false;
     private Loading loading;
     private Dialog dialog;
-    private ArrayList<Year> years;
+    private ArrayList<MyYear> myYears;
     private Context context;
     private TextView Title;
     private User user = new User();
@@ -83,7 +81,7 @@ public class Home extends AppCompatActivity {
     }
     private void setID(){
         intent = getIntent();
-        years = new ArrayList<>();
+        myYears = new ArrayList<>();
         user = (User)intent.getSerializableExtra("user");
         Title = findViewById(R.id.Title);
         Title.setText(getResources().getString(R.string.Home));
@@ -96,16 +94,33 @@ public class Home extends AppCompatActivity {
         BackIcon.setRotation(180);
     }
     private void setTags(){
-        years.add(new Year("2022"));
-        years.add(new Year("2021"));
-        years.add(new Year("2020"));
-        years.add(new Year("2019"));
-        years.get(0).AddMonth(new Month("Jan"));
-        years.get(0).AddMonth(new Month("March"));
-        years.get(1).AddMonth(new Month("Sep"));
-        ShowTags(years);
+        loading = new Loading(this);
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference reference = database.getReference().child("WorkDates").child(user.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myYears.clear();
+                int index = 0;
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    myYears.add(new MyYear(Integer.valueOf(data.getKey())));
+                    for(DataSnapshot months : snapshot.child(data.getKey()).getChildren()) {
+                        myYears.get(index).AddMonth(new Month(months.getKey()));
+                        Log.e("test", index + " " + months.getValue().toString());
+                    }
+                    Collections.sort(myYears.get(index).getMonths());
+                    index++;
+                    //MyDate date = data.getValue(MyDate.class);
+                }
+                Collections.sort(myYears);
+                loading.stop();
+                ShowTags(myYears);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
-    private void ShowTags(ArrayList<Year> HomeList){
+    private void ShowTags(ArrayList<MyYear> HomeList){
         HomeAdapter homeAdapter = new HomeAdapter(this,HomeList,user);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
         recyclerView.setAdapter(homeAdapter);
@@ -177,9 +192,54 @@ public class Home extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-
+                ArrayList<MyDate> myDates = new ArrayList<>();
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
+                DatabaseReference reference = database.getReference().child("WorkDates").child(user.getUid()).child(UserYear + "").child(getMonth(UserMonth));
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        myDates.clear();
+                        for( DataSnapshot data : snapshot.getChildren()){
+                            MyDate date = data.getValue(MyDate.class);
+                            myDates.add(date);
+                        }
+                        myDates.add(new MyDate(UserMonth + "", TextInputLayoutCompany.getEditText().getText().toString(), UserDay + "", UserYear + "", "10:00", "18:00"));
+                        reference.setValue(myDates);
+                        alertDialog.cancel();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) { }
+                });
             }
         });
+    }
+    private String getMonth(int month){
+        if(month == 1){
+            return "January";
+        }else if(month == 2){
+            return "February";
+        }else if(month == 3){
+            return "March";
+        }else if(month == 4){
+            return "April";
+        }else if(month == 5){
+            return "May";
+        }else if(month == 6){
+            return "June";
+        }else if(month == 7){
+            return "July";
+        }else if(month == 8){
+            return "August";
+        }else if(month == 9){
+            return "September";
+        }else if(month == 10){
+            return "October";
+        }else if(month == 11){
+            return "November";
+        }else if(month == 12){
+            return "December";
+        }
+        return "January";
     }
     private void DatePick(){
         TextInputLayoutDate.getEditText().setOnClickListener(new View.OnClickListener() {
