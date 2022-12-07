@@ -279,10 +279,6 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-    private void Clear(TextInputLayout input){
-        input.setHelperText("");
-        input.getEditText().setText("");
-    }
     private void AddDateDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = getLayoutInflater();
