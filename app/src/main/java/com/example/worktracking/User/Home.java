@@ -279,6 +279,10 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+    private void Clear(TextInputLayout input){
+        input.setHelperText("");
+        input.getEditText().setText("");
+    }
     private void AddDateDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = getLayoutInflater();
@@ -298,6 +302,13 @@ public class Home extends AppCompatActivity {
         DatePick();
         StartTimePick();
         EndTimePick();
+        TextInputLayoutCompany.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextInputLayoutCompany.setHelperText("");
+                TextInputLayoutCompany.getEditText().setText("");
+            }
+        });
         ButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { alertDialog.cancel(); }
@@ -349,11 +360,13 @@ public class Home extends AppCompatActivity {
         });
     }
     private Boolean TimePickCheck(TextInputLayout startTime, TextInputLayout endTime){
-        if(Integer.valueOf(startTime.getEditText().getText().toString().substring(0,2)) > Integer.valueOf(endTime.getEditText().getText().toString().substring(0,2))
+        if(!(TextInputLayoutEndTime.getEditText().getText().toString().equals("")) && !(TextInputLayoutStartTime.getEditText().getText().toString().equals(""))){
+            if(Integer.valueOf(startTime.getEditText().getText().toString().substring(0,2)) > Integer.valueOf(endTime.getEditText().getText().toString().substring(0,2))
                 || ( Integer.valueOf(startTime.getEditText().getText().toString().substring(0,2)) == Integer.valueOf(endTime.getEditText().getText().toString().substring(0,2))
-                && Integer.valueOf(startTime.getEditText().getText().toString().substring(3,5)) > Integer.valueOf(endTime.getEditText().getText().toString().substring(3,5)))){
-            startTime.setHelperText(getResources().getString(R.string.StartTimeError));
-            return false;
+                && Integer.valueOf(startTime.getEditText().getText().toString().substring(3,5)) > Integer.valueOf(endTime.getEditText().getText().toString().substring(3,5)))) {
+                startTime.setHelperText(getResources().getString(R.string.StartTimeError));
+                return false;
+            }
         }
         return true;
     }

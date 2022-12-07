@@ -74,6 +74,12 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.MyViewHolder> {
             holder.TotalWorkTime.setText(context.getResources().getString(R.string.TotalWorkTime) + ": " + str + " " + context.getResources().getString(R.string.Hours));
         else
             holder.TotalWorkTime.setText(context.getResources().getString(R.string.TotalWorkTime) + ": " + str + " " + context.getResources().getString(R.string.Minutes));
+        holder.floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
     public int getItemCount() { return dates.size(); }
 }
