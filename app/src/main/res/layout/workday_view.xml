@@ -36,7 +36,6 @@
                 android:textAllCaps="false"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:visibility="invisible"
                 app:icon="@drawable/edit"
                 app:iconPadding="2dp"
                 app:iconSize="20dp"

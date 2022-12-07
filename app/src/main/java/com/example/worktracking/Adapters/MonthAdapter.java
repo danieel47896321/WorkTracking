@@ -70,8 +70,8 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.MyViewHolder
                     holder.YearArrow.setImageResource(R.drawable.arrow_up);
                     holder.linearLayout.setVisibility(View.VISIBLE);
                     ArrayList<MyDate> d = new ArrayList<>();
-                    //MonthAdapter monthAdapter = new MonthAdapter(context,d,user);
-                   // holder.recyclerView.setAdapter(monthAdapter);
+                    DayAdapter dayAdapter = new DayAdapter(context, months.get(position).getDates(), user);
+                    holder.recyclerView.setAdapter(dayAdapter);
                 } else {
                     holder.YearArrow.setImageResource(R.drawable.arrow_down);
                     holder.linearLayout.setVisibility(View.GONE);
