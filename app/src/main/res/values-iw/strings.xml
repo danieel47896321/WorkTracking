@@ -57,6 +57,8 @@
     <string name="December" translatable="true">דצמבר</string>
     <string name="Date" translatable="true">תאריך</string>
     <string name="Year" translatable="true">שנה</string>
+    <string name="Select" translatable="true">בחר</string>
+    <string name="Search" translatable="true">חיפוש</string>
     <string name="Month" translatable="true">חודש</string>
     <string name="Company" translatable="true">חברה</string>
     <string name="StartTime" translatable="true">זמן התחלה</string>

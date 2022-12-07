@@ -58,7 +58,22 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.MyViewHolder> {
         holder.Date.setText(context.getResources().getString(R.string.Date) + ": " + dates.get(position).getDate());
         holder.StartTime.setText(context.getResources().getString(R.string.StartTime) + ": " + dates.get(position).getStartTime());
         holder.EndTime.setText(context.getResources().getString(R.string.EndTime) + ": " + dates.get(position).getEndTime());
-        holder.TotalWorkTime.setText(context.getResources().getString(R.string.TotalWorkTime) + ": " + "10");
+        String str = (Integer.valueOf(dates.get(position).getEndTime().substring(0,2)) - Integer.valueOf(dates.get(position).getStartTime().substring(0,2))) + "";
+        String rest = (Integer.valueOf(dates.get(position).getEndTime().substring(3,5)) - Integer.valueOf(dates.get(position).getStartTime().substring(3,5))) + "";
+        if((Integer.valueOf(dates.get(position).getEndTime().substring(3,5)) - Integer.valueOf(dates.get(position).getStartTime().substring(3,5))) < 0) {
+            rest = (60 + (Integer.valueOf(dates.get(position).getEndTime().substring(3, 5)) - Integer.valueOf(dates.get(position).getStartTime().substring(3, 5)))) + "";
+            str = ((Integer.valueOf(dates.get(position).getEndTime().substring(0,2)) - Integer.valueOf(dates.get(position).getStartTime().substring(0,2))) - 1) + "";
+        }
+        if(str.length() == 1)
+            str = 0 + str;
+        str += ":";
+        if(rest.length() == 1)
+            rest = 0 + rest;
+        str += rest;
+        if(Integer.valueOf(str.substring(0,2)) > 00)
+            holder.TotalWorkTime.setText(context.getResources().getString(R.string.TotalWorkTime) + ": " + str + " " + context.getResources().getString(R.string.Hours));
+        else
+            holder.TotalWorkTime.setText(context.getResources().getString(R.string.TotalWorkTime) + ": " + str + " " + context.getResources().getString(R.string.Minutes));
     }
     public int getItemCount() { return dates.size(); }
 }

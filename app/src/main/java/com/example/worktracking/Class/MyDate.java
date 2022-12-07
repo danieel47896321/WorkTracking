@@ -1,8 +1,11 @@
 package com.example.worktracking.Class;
 
+import com.example.worktracking.R;
+
 import java.io.Serializable;
 
 public class MyDate implements Serializable {
+    private String Id;
     private String Month;
     private String Company;
     private String Day;
@@ -12,7 +15,8 @@ public class MyDate implements Serializable {
     private String EndTime;
     private String TotalWorkTime;
     public MyDate() { }
-    public MyDate(String month, String company, String day, String year, String startTime, String endTime) {
+    public MyDate(String id, String month, String company, String day, String year, String startTime, String endTime) {
+        Id = id;
         Month = month;
         Year = year;
         Company = company;
@@ -20,6 +24,13 @@ public class MyDate implements Serializable {
         Date = day + "/" + month + "/" + year;
         StartTime = startTime;
         EndTime = endTime;
+        TotalWorkTime = (Integer.valueOf(StartTime.substring(0,2)) - Integer.valueOf(EndTime.substring(0,2))) + ":" + (Integer.valueOf(StartTime.substring(3,5)) - Integer.valueOf(EndTime.substring(3,5)));
+    }
+    public String getId() {
+        return Id;
+    }
+    public void setId(String id) {
+        Id = id;
     }
     public String getYear() {
         return Year;

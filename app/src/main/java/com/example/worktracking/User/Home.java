@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,14 +16,19 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.worktracking.Adapters.HomeAdapter;
@@ -57,6 +63,10 @@ public class Home extends AppCompatActivity {
     private Animation rotateOpen, rotateClose, toBottom, fromBottom;
     private Boolean isOpen = false;
     private Loading loading;
+    private Dialog dialog;
+    private TextView TextViewSearch;
+    private ListView ListViewSearch;
+    private EditText EditTextSearch;
     private EditText Hours, Minutes;
     private ArrayList<MyYear> myYears;
     private Context context;
@@ -199,13 +209,75 @@ public class Home extends AppCompatActivity {
                     TextInputLayoutPickDate.setHelperText("");
                 if(!TextInputLayoutPickDate.getEditText().getText().toString().equals("")) {
                     alertDialog.cancel();
-
+                    for(MyYear year : myYears){
+                        for(Month month : year.getMonths()){
+                            for(MyDate date : month.getDates()) {
+                                String str = "";
+                                str = date.getCompany() + ", " + date.getDate();
+                                if(str.equals(TextInputLayoutPickDate.getEditText().getText().toString())) {
+                                    loading = new Loading(Home.this);
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
+                                    DatabaseReference reference = database.getReference().child("WorkDates").child(user.getUid()).child(year.getYear() + "").child(month.getMonth()).child(date.getId());
+                                    reference.setValue(null);
+                                    loading.stop();
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });
     }
     private void RemoveDatePick(){
-
+        ArrayList<String> dateList = new ArrayList<>();
+        for(MyYear year : myYears){
+            for(Month month : year.getMonths()){
+                for(MyDate date : month.getDates()) {
+                    String str = "";
+                    str = date.getCompany() + ", " + date.getDate();
+                    dateList.add(str);
+                }
+            }
+        }
+        TextInputLayoutPickDate.getEditText().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String course[] = new String[dateList.size()];
+                for(int i=0; i<dateList.size();i++)
+                    course[i] = dateList.get(i);
+                setDialog(course,getResources().getString(R.string.Date),TextInputLayoutPickDate.getEditText());
+            }
+        });
+    }
+    private void setDialog(String[] array, String title, TextView textViewPick){
+        dialog = new Dialog(Home.this);
+        dialog.setContentView(R.layout.dialog_search_spinner);
+        dialog.getWindow().setLayout(1000,950);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        EditTextSearch = dialog.findViewById(R.id.EditTextSearch);
+        ListViewSearch = dialog.findViewById(R.id.ListViewSearch);
+        TextViewSearch = dialog.findViewById(R.id.TextViewSearch);
+        TextViewSearch.setText(title);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Home.this, R.layout.dropdown_item, array);
+        ListViewSearch.setAdapter(adapter);
+        EditTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getFilter().filter(charSequence);
+            }
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
+        ListViewSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                dialog.dismiss();
+                textViewPick.setText(adapterView.getItemAtPosition(i).toString());
+            }
+        });
     }
     private void AddDateDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -257,11 +329,13 @@ public class Home extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             myDates.clear();
+                            int id = 0;
                             for (DataSnapshot data : snapshot.getChildren()) {
                                 MyDate date = data.getValue(MyDate.class);
                                 myDates.add(date);
+                                id++;
                             }
-                            myDates.add(new MyDate(UserMonth + "", TextInputLayoutCompany.getEditText().getText().toString(), UserDay + "", UserYear + "", TextInputLayoutStartTime.getEditText().getText().toString(), TextInputLayoutEndTime.getEditText().getText().toString()));
+                            myDates.add(new MyDate(id + "",UserMonth + "", TextInputLayoutCompany.getEditText().getText().toString(), UserDay + "", UserYear + "", TextInputLayoutStartTime.getEditText().getText().toString(), TextInputLayoutEndTime.getEditText().getText().toString()));
                             reference.setValue(myDates);
                             alertDialog.cancel();
                         }
@@ -276,7 +350,7 @@ public class Home extends AppCompatActivity {
     }
     private Boolean TimePickCheck(TextInputLayout startTime, TextInputLayout endTime){
         if(Integer.valueOf(startTime.getEditText().getText().toString().substring(0,2)) > Integer.valueOf(endTime.getEditText().getText().toString().substring(0,2))
-                || ( Integer.valueOf(startTime.getEditText().getText().toString().substring(0,2)) <= Integer.valueOf(endTime.getEditText().getText().toString().substring(0,2))
+                || ( Integer.valueOf(startTime.getEditText().getText().toString().substring(0,2)) == Integer.valueOf(endTime.getEditText().getText().toString().substring(0,2))
                 && Integer.valueOf(startTime.getEditText().getText().toString().substring(3,5)) > Integer.valueOf(endTime.getEditText().getText().toString().substring(3,5)))){
             startTime.setHelperText(getResources().getString(R.string.StartTimeError));
             return false;

@@ -45,7 +45,6 @@
                 android:text="@string/NumberOfDays"
                 android:textColor="@color/default_color"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Month" />
@@ -57,31 +56,19 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="center_horizontal"
                 android:src="@drawable/arrow_down"
-                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintBottom_toBottomOf="@+id/Month"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/view"
-                android:visibility="gone"
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:layout_marginStart="7dp"
-                android:layout_marginEnd="7dp"
-                android:background="@color/default_color"
-                app:layout_constraintEnd_toEndOf="@+id/Month"
-                app:layout_constraintStart_toStartOf="@+id/Month"
-                app:layout_constraintTop_toBottomOf="@+id/Month" />
-
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/view">
+                app:layout_constraintTop_toBottomOf="@+id/NumberOfDays">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"

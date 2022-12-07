@@ -57,6 +57,8 @@
     <string name="Date" translatable="true">Date</string>
     <string name="Year" translatable="true">Year</string>
     <string name="Month" translatable="true">Month</string>
+    <string name="Select" translatable="true">Select</string>
+    <string name="Search" translatable="true">Search</string>
     <string name="Company" translatable="true">Company</string>
     <string name="StartTime" translatable="true">Start Time</string>
     <string name="EndTime" translatable="true">End Time</string>
