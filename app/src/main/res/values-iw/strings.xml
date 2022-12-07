@@ -64,6 +64,9 @@
     <string name="TotalWorkTime" translatable="true">זמן עבודה כולל</string>
     <string name="Add" translatable="true">הוספה</string>
     <string name="Cancel" translatable="true">ביטול</string>
+    <string name="Remove" translatable="true">הסרה</string>
     <string name="Edit" translatable="true">עריכה</string>
     <string name="InvalidDate" translatable="true">תאריך לא תקין</string>
+    <string name="Hours" translatable="true">שעות</string>
+    <string name="Minutes" translatable="true">דקות</string>
 </resources>

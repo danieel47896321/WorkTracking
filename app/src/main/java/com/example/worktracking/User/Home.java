@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,13 +15,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +29,7 @@ import com.example.worktracking.Adapters.HomeAdapter;
 import com.example.worktracking.Class.Loading;
 import com.example.worktracking.Class.Month;
 import com.example.worktracking.Class.MyDate;
+import com.example.worktracking.Class.PopUpMSG;
 import com.example.worktracking.Class.User;
 import com.example.worktracking.Class.MyYear;
 import com.example.worktracking.MainActivity;
@@ -47,18 +47,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 
 public class Home extends AppCompatActivity {
     private ImageView BackIcon;
-    private TextInputLayout TextInputLayoutCompany, TextInputLayoutDate, TextInputLayoutStartTime, TextInputLayoutEndTime;
-    private Button ButtonAddDate, ButtonRemoveDate, ButtonAdd, ButtonCancel;
+    private TextInputLayout TextInputLayoutCompany, TextInputLayoutDate, TextInputLayoutStartTime, TextInputLayoutEndTime, TextInputLayoutPickDate;
+    private Button ButtonRemove, ButtonAdd, ButtonCancel, Finish;
     private FloatingActionButton floatingActionButtonOpen;
     private ExtendedFloatingActionButton floatingActionButtonAdd, floatingActionButtonRemove;
     private Animation rotateOpen, rotateClose, toBottom, fromBottom;
     private Boolean isOpen = false;
     private Loading loading;
-    private Dialog dialog;
+    private EditText Hours, Minutes;
     private ArrayList<MyYear> myYears;
     private Context context;
     private TextView Title;
@@ -157,7 +156,7 @@ public class Home extends AppCompatActivity {
                     floatingActionButtonRemove.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //RemoveDateDialog();
+                            RemoveDateDialog();
                         }
                     });
                 } else {
@@ -171,6 +170,42 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void RemoveDateDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_remove_date,null);
+        builder.setCancelable(false);
+        builder.setView(dialogView);
+        TextInputLayoutPickDate = dialogView.findViewById(R.id.TextInputLayoutPickDate);
+        ButtonRemove = dialogView.findViewById(R.id.ButtonRemove);
+        ButtonCancel = dialogView.findViewById(R.id.ButtonCancel);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.show();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        RemoveDatePick();
+        ButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { alertDialog.cancel(); }
+        });
+        ButtonRemove.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                if(TextInputLayoutPickDate.getEditText().getText().toString().equals(""))
+                    TextInputLayoutPickDate.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutPickDate.setHelperText("");
+                if(!TextInputLayoutPickDate.getEditText().getText().toString().equals("")) {
+                    alertDialog.cancel();
+
+                }
+            }
+        });
+    }
+    private void RemoveDatePick(){
+
     }
     private void AddDateDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -189,6 +224,8 @@ public class Home extends AppCompatActivity {
         alertDialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DatePick();
+        StartTimePick();
+        EndTimePick();
         ButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { alertDialog.cancel(); }
@@ -215,7 +252,7 @@ public class Home extends AppCompatActivity {
                     TextInputLayoutEndTime.setHelperText(getResources().getString(R.string.Required));
                 else
                     TextInputLayoutEndTime.setHelperText("");
-                if(!(TextInputLayoutCompany.getEditText().getText().toString().equals("")) && !(TextInputLayoutDate.getEditText().getText().toString().equals(""))
+                if(!(TextInputLayoutCompany.getEditText().getText().toString().equals("")) && !(TextInputLayoutDate.getEditText().getText().toString().equals("")) && !checkDate(UserYear,UserMonth,UserDay)
                     && !(TextInputLayoutEndTime.getEditText().getText().toString().equals("")) && !(TextInputLayoutStartTime.getEditText().getText().toString().equals(""))) {
                     ArrayList<MyDate> myDates = new ArrayList<>();
                     FirebaseDatabase database = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
@@ -228,7 +265,7 @@ public class Home extends AppCompatActivity {
                                 MyDate date = data.getValue(MyDate.class);
                                 myDates.add(date);
                             }
-                            myDates.add(new MyDate(UserMonth + "", TextInputLayoutCompany.getEditText().getText().toString(), UserDay + "", UserYear + "", "10:00", "18:00"));
+                            myDates.add(new MyDate(UserMonth + "", TextInputLayoutCompany.getEditText().getText().toString(), UserDay + "", UserYear + "", TextInputLayoutStartTime.getEditText().getText().toString(), TextInputLayoutEndTime.getEditText().getText().toString()));
                             reference.setValue(myDates);
                             alertDialog.cancel();
                         }
@@ -278,6 +315,52 @@ public class Home extends AppCompatActivity {
             return "December";
         }
         return "January";
+    }
+    private void StartTimePick(){
+        TextInputLayoutStartTime.getEditText().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog(TextInputLayoutStartTime.getEditText());
+            }
+        });
+    }
+    private void EndTimePick(){
+        TextInputLayoutEndTime.getEditText().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog(TextInputLayoutEndTime.getEditText());
+            }
+        });
+    }
+    private void TimePickerDialog(TextView Time){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.timepicker_view,null);
+        builder.setCancelable(false);
+        builder.setView(dialogView);
+        Minutes = dialogView.findViewById(R.id.Minutes);
+        Hours = dialogView.findViewById(R.id.Hours);
+        Finish = dialogView.findViewById(R.id.Finish);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        Finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Minutes.getText().toString().length() == 0)
+                    Minutes.setText("00");
+                else if(Minutes.getText().toString().length() == 1) {
+                    Minutes.setText("0" + Minutes.getText().toString());
+                }
+                if(Hours.getText().toString().length() == 0)
+                    Hours.setText("00");
+                else if(Hours.getText().toString().length() == 1)
+                    Hours.setText("0" + Hours.getText().toString());
+                Time.setText(Hours.getText().toString() + ":" + Minutes.getText().toString());
+                alertDialog.cancel();
+            }
+        });
     }
     private void DatePick(){
         TextInputLayoutDate.getEditText().setOnClickListener(new View.OnClickListener() {

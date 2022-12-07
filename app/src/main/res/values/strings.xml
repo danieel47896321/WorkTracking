@@ -63,8 +63,11 @@
     <string name="TotalWorkTime" translatable="true">Total Work Time</string>
     <string name="Add" translatable="true">Add</string>
     <string name="Cancel" translatable="true">Cancel</string>
+    <string name="Remove" translatable="true">Remove</string>
     <string name="Edit" translatable="true">Edit</string>
     <string name="InvalidDate" translatable="true">Invalid date</string>
+    <string name="Hours" translatable="true">Hours</string>
+    <string name="Minutes" translatable="true">Minutes</string>
 
     <string-array name="Months">
         <item>@string/January</item>

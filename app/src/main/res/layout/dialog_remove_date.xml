@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextInputLayoutPickDate"
+            style="@style/TextInputLayout_Style"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:hint="@string/Date"
+            app:endIconDrawable="@drawable/drop_down"
+            app:endIconMode="custom"
+            app:startIconDrawable="@drawable/date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/TextInputEditTextInputPickDate"
+                style="@style/TextInputEditText_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/ButtonRemove"
+            style="@style/Button_Style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/Remove"
+            app:layout_constraintEnd_toEndOf="@+id/TextInputLayoutPickDate"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/TextInputLayoutPickDate"
+            app:layout_constraintTop_toBottomOf="@+id/TextInputLayoutPickDate" />
+
+        <Button
+            android:id="@+id/ButtonCancel"
+            style="@style/Button_Style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/Cancel"
+            app:layout_constraintEnd_toEndOf="@+id/ButtonRemove"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/ButtonRemove"
+            app:layout_constraintTop_toBottomOf="@+id/ButtonRemove" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
