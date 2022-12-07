@@ -61,6 +61,10 @@
     <string name="Company" translatable="true">חברה</string>
     <string name="StartTime" translatable="true">זמן התחלה</string>
     <string name="EndTime" translatable="true">זמן סיום</string>
+    <string name="HourError" translatable="true">שגיאת בחירת שעה(טווח תקין 00 - 24)</string>
+    <string name="MinutesError" translatable="true">שגיאת בחירת דקות(טווח תקין 00 - 59)</string>
+    <string name="TimePickError" translatable="true">שגיאת בחירת שעה(טווח תקין 00:00 - 24:00)</string>
+    <string name="StartTimeError" translatable="true">שגיאה בזמן התחלה</string>
     <string name="TotalWorkTime" translatable="true">זמן עבודה כולל</string>
     <string name="Add" translatable="true">הוספה</string>
     <string name="Cancel" translatable="true">ביטול</string>

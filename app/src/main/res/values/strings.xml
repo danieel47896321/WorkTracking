@@ -60,6 +60,10 @@
     <string name="Company" translatable="true">Company</string>
     <string name="StartTime" translatable="true">Start Time</string>
     <string name="EndTime" translatable="true">End Time</string>
+    <string name="HourError" translatable="true">Hours Pick Error(range 00 - 24)</string>
+    <string name="MinutesError" translatable="true">Minutes Pick Error(range 00 - 59)</string>
+    <string name="TimePickError" translatable="true">Time Pick Error(range 00:00 - 24:00)</string>
+    <string name="StartTimeError" translatable="true">Start Time Error</string>
     <string name="TotalWorkTime" translatable="true">Total Work Time</string>
     <string name="Add" translatable="true">Add</string>
     <string name="Cancel" translatable="true">Cancel</string>

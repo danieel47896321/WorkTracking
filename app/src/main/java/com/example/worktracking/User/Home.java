@@ -244,16 +244,12 @@ public class Home extends AppCompatActivity {
                     TextInputLayoutDate.setHelperText(getResources().getString(R.string.InvalidDate));
                 else
                     TextInputLayoutDate.setHelperText("");
-                if(TextInputLayoutStartTime.getEditText().getText().toString().equals(""))
-                    TextInputLayoutStartTime.setHelperText(getResources().getString(R.string.Required));
-                else
-                    TextInputLayoutStartTime.setHelperText("");
-                if(TextInputLayoutEndTime.getEditText().getText().toString().equals(""))
-                    TextInputLayoutEndTime.setHelperText(getResources().getString(R.string.Required));
-                else
-                    TextInputLayoutEndTime.setHelperText("");
-                if(!(TextInputLayoutCompany.getEditText().getText().toString().equals("")) && !(TextInputLayoutDate.getEditText().getText().toString().equals("")) && !checkDate(UserYear,UserMonth,UserDay)
-                    && !(TextInputLayoutEndTime.getEditText().getText().toString().equals("")) && !(TextInputLayoutStartTime.getEditText().getText().toString().equals(""))) {
+                TimeCheck(TextInputLayoutStartTime);
+                TimeCheck(TextInputLayoutEndTime);
+                TimePickCheck(TextInputLayoutStartTime, TextInputLayoutEndTime);
+                if(!(TextInputLayoutCompany.getEditText().getText().toString().equals("")) && !(TextInputLayoutDate.getEditText().getText().toString().equals("")) && checkDate(UserYear,UserMonth,UserDay)
+                    && !(TextInputLayoutEndTime.getEditText().getText().toString().equals("")) && !(TextInputLayoutStartTime.getEditText().getText().toString().equals(""))
+                    && TimeCheck(TextInputLayoutStartTime) && TimeCheck(TextInputLayoutEndTime) && TimePickCheck(TextInputLayoutStartTime, TextInputLayoutEndTime)) {
                     ArrayList<MyDate> myDates = new ArrayList<>();
                     FirebaseDatabase database = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
                     DatabaseReference reference = database.getReference().child("WorkDates").child(user.getUid()).child(UserYear + "").child(getMonth(UserMonth));
@@ -277,6 +273,32 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
+    }
+    private Boolean TimePickCheck(TextInputLayout startTime, TextInputLayout endTime){
+        if(Integer.valueOf(startTime.getEditText().getText().toString().substring(0,2)) > Integer.valueOf(endTime.getEditText().getText().toString().substring(0,2))
+                || ( Integer.valueOf(startTime.getEditText().getText().toString().substring(0,2)) <= Integer.valueOf(endTime.getEditText().getText().toString().substring(0,2))
+                && Integer.valueOf(startTime.getEditText().getText().toString().substring(3,5)) > Integer.valueOf(endTime.getEditText().getText().toString().substring(3,5)))){
+            startTime.setHelperText(getResources().getString(R.string.StartTimeError));
+            return false;
+        }
+        return true;
+    }
+    private Boolean TimeCheck(TextInputLayout time){
+        if(time.getEditText().getText().toString().equals("")) {
+            time.setHelperText(getResources().getString(R.string.Required));
+            return false;
+        } else if(Integer.valueOf(time.getEditText().getText().toString().substring(0,2)) > 24){
+            time.setHelperText(getResources().getString(R.string.HourError));
+            return false;
+        } else if(Integer.valueOf(time.getEditText().getText().toString().substring(3,5)) > 59){
+            time.setHelperText(getResources().getString(R.string.MinutesError));
+            return false;
+        }  else if(Integer.valueOf(time.getEditText().getText().toString().substring(0,2)) == 24 && Integer.valueOf(TextInputLayoutStartTime.getEditText().getText().toString().substring(3,5)) > 00){
+            time.setHelperText(getResources().getString(R.string.TimePickError));
+            return false;
+        }else
+            time.setHelperText("");
+        return true;
     }
     private boolean checkDate(int userYear, int userMonth, int userDay) {
         if(userYear > Year) {
