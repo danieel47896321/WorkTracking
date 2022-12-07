@@ -61,7 +61,9 @@
     <string name="Company" translatable="true">חברה</string>
     <string name="StartTime" translatable="true">זמן התחלה</string>
     <string name="EndTime" translatable="true">זמן סיום</string>
+    <string name="TotalWorkTime" translatable="true">זמן עבודה כולל</string>
     <string name="Add" translatable="true">הוספה</string>
     <string name="Cancel" translatable="true">ביטול</string>
+    <string name="Edit" translatable="true">עריכה</string>
 
 </resources>

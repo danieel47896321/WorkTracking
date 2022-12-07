@@ -101,16 +101,20 @@ public class Home extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myYears.clear();
-                int index = 0;
+                int indexYear = 0, indexMonth = 0;
                 for (DataSnapshot data : snapshot.getChildren()) {
                     myYears.add(new MyYear(Integer.valueOf(data.getKey())));
-                    for(DataSnapshot months : snapshot.child(data.getKey()).getChildren()) {
-                        myYears.get(index).AddMonth(new Month(months.getKey()));
-                        Log.e("test", index + " " + months.getValue().toString());
+                    for(DataSnapshot month : snapshot.child(data.getKey()).getChildren()) {
+                        myYears.get(indexYear).AddMonth(new Month(month.getKey()));
+                        for (DataSnapshot day : snapshot.child(data.getKey()).child(month.getKey()).getChildren()) {
+                            MyDate myDate = day.getValue(MyDate.class);
+                            myYears.get(indexYear).getMonths().get(indexMonth).getDates().add(myDate);
+                        }
+                        indexMonth++;
                     }
-                    Collections.sort(myYears.get(index).getMonths());
-                    index++;
-                    //MyDate date = data.getValue(MyDate.class);
+                    Collections.sort(myYears.get(indexYear).getMonths());
+                    indexYear++;
+                    indexMonth = 0;
                 }
                 Collections.sort(myYears);
                 loading.stop();

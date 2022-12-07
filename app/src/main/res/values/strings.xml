@@ -60,8 +60,10 @@
     <string name="Company" translatable="true">Company</string>
     <string name="StartTime" translatable="true">Start Time</string>
     <string name="EndTime" translatable="true">End Time</string>
+    <string name="TotalWorkTime" translatable="true">Total Work Time</string>
     <string name="Add" translatable="true">Add</string>
     <string name="Cancel" translatable="true">Cancel</string>
+    <string name="Edit" translatable="true">Edit</string>
 
     <string-array name="Months">
         <item>@string/January</item>

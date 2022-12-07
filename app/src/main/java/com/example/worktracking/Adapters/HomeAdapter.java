@@ -14,12 +14,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.worktracking.Class.MyDate;
 import com.example.worktracking.Class.MyYear;
 import com.example.worktracking.Class.User;
 import com.example.worktracking.R;
 
-import java.time.Year;
 import java.util.ArrayList;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
@@ -43,7 +41,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         ConstraintLayout constraintLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            Year = itemView.findViewById(R.id.Year);
+            Year = itemView.findViewById(R.id.EndTime);
             NumberOfMonths = itemView.findViewById(R.id.NumberOfMonths);
             YearArrow = itemView.findViewById(R.id.YearArrow);
             linearLayout = itemView.findViewById(R.id.linearLayout);
