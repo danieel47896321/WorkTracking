@@ -41,6 +41,7 @@
     <string name="Yes" translatable="true">כן</string>
     <string name="No" translatable="true">לא</string>
     <string name="NumberOfMonths" translatable="true">חודשים שעבדתי:</string>
+    <string name="NumberOfDays" translatable="true">ימים שעבדתי:</string>
     <string name="AreYouSure" translatable="true">האם אתה בטוח שברצונך להתנתק?</string>
     <string name="January" translatable="true">ינואר</string>
     <string name="February" translatable="true">פברואר</string>

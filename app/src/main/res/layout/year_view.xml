@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="חודשים שעבדתי: 14"
+                android:text="@string/NumberOfMonths"
                 android:textColor="@color/default_color"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -40,6 +40,7 @@
     <string name="Yes" translatable="true">Yes</string>
     <string name="No" translatable="true">No</string>
     <string name="NumberOfMonths" translatable="true">Months i worked:</string>
+    <string name="NumberOfDays" translatable="true">Days i worked:</string>
     <string name="AreYouSure" translatable="true">Are you sure you want to Sign Out?</string>
     <string name="January" translatable="true">January</string>
     <string name="February" translatable="true">February</string>

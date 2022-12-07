@@ -35,7 +35,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.MyViewHolder
             isClicked.add(false);
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView Month;
+        TextView Month, NumberOfDays;
         ImageView YearArrow;
         LinearLayout linearLayout;
         RecyclerView recyclerView;
@@ -43,6 +43,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.MyViewHolder
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             Month = itemView.findViewById(R.id.Month);
+            NumberOfDays = itemView.findViewById(R.id.NumberOfDays);
             YearArrow = itemView.findViewById(R.id.YearArrow);
             linearLayout = itemView.findViewById(R.id.linearLayout);
             recyclerView = itemView.findViewById(R.id.recyclerView);
@@ -58,6 +59,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.MyViewHolder
     @SuppressLint("ResourceType")
     public void onBindViewHolder(@NonNull MonthAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.Month.setText(getMonth(months.get(position).getMonth()));
+        holder.NumberOfDays.setText(context.getResources().getString(R.string.NumberOfDays) + " " + months.get(position).getDates().size());
         holder.recyclerView.setHasFixedSize(true);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
