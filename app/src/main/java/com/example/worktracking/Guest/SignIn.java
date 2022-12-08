@@ -36,9 +36,7 @@ public class SignIn extends Fragment {
     private TextInputLayout TextInputLayoutEmail, TextInputLayoutPassword;
     private Button ButtonSignIn;
     private Loading loading;
-    private Intent intent;
     private User user = new User();
-    private FirebaseUser firebaseUser;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://worktracking-ba85c-default-rtdb.europe-west1.firebasedatabase.app");
     private DatabaseReference databaseReference = firebaseDatabase.getReference().child("Users");
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
