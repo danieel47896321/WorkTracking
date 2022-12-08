@@ -70,42 +70,6 @@ public class CreateAccount extends Fragment {
             firebaseAuth.getInstance().signOut();
     }
     private boolean isEmailValid(CharSequence email) { return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches(); }
-    private boolean CheckEmail(){
-        if(TextInputLayoutEmail.getEditText().getText().length()<1) {
-            TextInputLayoutEmail.setHelperText(getResources().getString(R.string.Required));
-            return false;
-        }
-        else if(!isEmailValid(TextInputLayoutEmail.getEditText().getText().toString())) {
-            TextInputLayoutEmail.setHelperText(getResources().getString(R.string.InvalidEmail));
-            return false;
-        }
-        else
-            TextInputLayoutEmail.setHelperText("");
-        return true;
-    }
-    private boolean CheckName(TextInputLayout name){
-        if(name.getEditText().getText().length()<1) {
-            name.setHelperText(getResources().getString(R.string.Required));
-            return false;
-        }
-        else
-            name.setHelperText("");
-        return true;
-    }
-
-    private boolean CheckPassword(TextInputLayout password){
-        if(password.getEditText().getText().length()<1) {
-            password.setHelperText(getResources().getString(R.string.Required));
-            return false;
-        }
-        else if(password.getEditText().getText().length()<6){
-            password.setHelperText(getResources().getString(R.string.MinimumChars));
-            return false;
-        }
-        else
-            password.setHelperText("");
-        return true;
-    }
     private void CheckValues(){
         if(TextInputLayoutFirstName.getEditText().getText().length()<1)
             TextInputLayoutFirstName.setHelperText(getResources().getString(R.string.Required));
