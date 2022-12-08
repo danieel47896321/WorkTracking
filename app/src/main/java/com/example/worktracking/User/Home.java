@@ -35,7 +35,6 @@ import com.example.worktracking.Adapters.HomeAdapter;
 import com.example.worktracking.Class.Loading;
 import com.example.worktracking.Class.Month;
 import com.example.worktracking.Class.MyDate;
-import com.example.worktracking.Class.PopUpMSG;
 import com.example.worktracking.Class.User;
 import com.example.worktracking.Class.MyYear;
 import com.example.worktracking.MainActivity;
@@ -200,7 +199,6 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) { alertDialog.cancel(); }
         });
         ButtonRemove.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 if(TextInputLayoutPickDate.getEditText().getText().toString().equals(""))
@@ -310,7 +308,6 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) { alertDialog.cancel(); }
         });
         ButtonAdd.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 if(TextInputLayoutCompany.getEditText().getText().toString().equals(""))
@@ -472,7 +469,6 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Home.this, new DatePickerDialog.OnDateSetListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month + 1;
